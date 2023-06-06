@@ -18,10 +18,14 @@ const MyComponent = ()=> {
   useEffect(()=> {
     const observer = new IntersectionObserver( (entries) => {
         entries.forEach((entry)=> {
+            fetchNextPage()
             console.log("is on screen = " + entry.isIntersecting)
         });
     });
     if (myRef.current) observer.observe(myRef.current)
+    return (()=> {
+      if(myRef.current) observer.unobserve(myRef.current) 
+    })
   }, [myRef])
 
   const {data, fetchNextPage, isFetchingNextPage} = useInfiniteQuery(
