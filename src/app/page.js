@@ -4,7 +4,7 @@ import { useInfiniteQuery, QueryClient, QueryClientProvider } from "@tanstack/re
 import { useState, useRef, useEffect } from "react"
 
 const fetchData = async (page) => {
-  const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=27&_page=' + page)
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5&_page=' + page)
   const posts = (await response.json())
   return posts;
 }
