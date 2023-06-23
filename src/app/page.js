@@ -15,8 +15,6 @@ const MyComponent = ()=> {
   const myRef = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
 
-  
-
   const {data, fetchNextPage, isFetchingNextPage} = useInfiniteQuery(
     ['query'], 
     async ({pageParam = 1}) => {
@@ -31,12 +29,7 @@ const MyComponent = ()=> {
   )
 
   useEffect(()=> {
-    console.log('efect')
-    console.log(myRef)
-    console.log(myRef.current)
     const observer = new IntersectionObserver( (entries) => {
-        console.log("observer")
-        console.log(entries)
         entries.forEach((entry)=> {
             fetchNextPage()
             console.log("is on screen = " + entry.isIntersecting)
@@ -44,11 +37,7 @@ const MyComponent = ()=> {
     });
     if (myRef.current) {
       observer.observe(myRef.current)
-      console.log("🔴🔴🔴 setup observer")
     }
-    // return (()=> {
-    //   if(myRef.current) observer.unobserve(myRef.current) 
-    // })
   }, [myRef])
 
   const loadMoreBtnText = ()=> {
@@ -64,16 +53,19 @@ const MyComponent = ()=> {
 
   return <>
     <h1>📖 Post list</h1>
-    <ol>
-      {data?.pages.map((page, i)=> (
-        <span key={i}>
-          {page.map(
-            (p,i) => <li key={p.id}>{p.title}</li>
-          )}
-        </span>
-      ))}
-      <span ref={myRef}></span>
-    </ol>
+    <div className="container">
+      <ol>
+        {data?.pages.map((page, i)=> (
+          <span key={i}>
+            {page.map(
+              (p,i) => <li key={p.id}>{p.title}</li>
+            )}
+          </span>
+        ))}
+        <span ref={myRef}></span>
+      </ol>
+    </div>
+    
   </>
 }
 
